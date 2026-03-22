@@ -1,8 +1,9 @@
 import express from "express"
 
 import {z} from "zod";
+import { PrismaClient } from "@prisma/client";
 
-
+ 
 
 
 export const app = express()
@@ -18,6 +19,7 @@ const suminput = z.object({
 app.post("/sum",(req,res)=>{
     const parsedRes = suminput.safeParse(req.body)
 
+    const prismaClient = new PrismaClient()
     if(!parsedRes.success){
         return res.status(411).json({message:"Incorrect input"})
     }
